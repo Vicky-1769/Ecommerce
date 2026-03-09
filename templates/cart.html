@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-5 animate-on-scroll">
+    <div>
+        <h2 class="display-6 fw-bolder mb-1 text-dark">Your Cart</h2>
+        <p class="text-muted mb-0">Review your items before checkout.</p>
+    </div>
+    {% if items %}
+    <span class="badge bg-primary bg-gradient rounded-pill px-4 py-2 shadow-sm fs-6 text-uppercase tracking-wider">{{
+        cart_count }} Items</span>
+    {% endif %}
+</div>
+
+{% if items %}
+<div class="row g-5 animate-on-scroll delay-100">
+    <!-- Cart Items -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 bg-white">
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for item in items %}
+                    <li
+                        class="list-group-item p-4 p-md-5 d-flex flex-column flex-sm-row gap-4 align-items-center bg-transparent border-bottom transition-hover">
+                        <div class="bg-light p-3 rounded-4 shadow-sm" style="width: 120px; height: 120px;">
+                            <img src="{{ item.image }}" alt="{{ item.name }}"
+                                class="w-100 h-100 object-fit-contain mix-blend-multiply">
+                        </div>
+                        <div class="flex-grow-1 text-center text-sm-start w-100">
+                            <h5 class="fw-bold mb-1 text-dark">{{ item.name }}</h5>
+                            <p class="text-muted small mb-3">Unit Price: <span class="fw-semibold">₹{{ item.price
+                                    }}</span></p>
+
+                            <div
+                                class="d-flex align-items-center justify-content-center justify-content-sm-between gap-3 flex-wrap">
+                                <div class="d-flex align-items-center bg-light rounded-pill border shadow-sm px-3 py-1"
+                                    style="width: fit-content;">
+                                    <form action="/update_cart/{{ item.cart_id }}" method="POST"
+                                        class="d-flex align-items-center mb-0">
+                                        <button type="submit" name="action" value="decrease"
+                                            class="btn btn-sm text-secondary fw-bold fs-5 p-0 bg-transparent border-0 hover-primary">&minus;</button>
+                                        <span class="px-4 fw-bold text-center text-dark" style="min-width: 40px;">{{
+                                            item.quantity }}</span>
+                                        <button type="submit" name="action" value="increase"
+                                            class="btn btn-sm text-secondary fw-bold fs-5 p-0 bg-transparent border-0 hover-primary">&plus;</button>
+                                    </form>
+                                </div>
+                                <div class="d-flex align-items-center gap-4">
+                                    <span class="fs-4 fw-bold text-gradient text-nowrap">₹{{ item.total }}</span>
+                                    <a href="/remove_from_cart/{{ item.cart_id }}"
+                                        class="btn btn-outline-danger btn-sm p-2 rounded-circle shadow-sm border-2 d-flex align-items-center justify-content-center transition-transform hover-scale"
+                                        title="Remove" style="width: 36px; height: 36px;">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer bg-light border-0 p-4 d-flex justify-content-between align-items-center">
+                <a href="/shop"
+                    class="btn btn-link text-decoration-none text-muted fw-bold p-0 d-flex align-items-center gap-2 hover-primary"><i
+                        class="bi bi-arrow-left"></i> Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-lg rounded-4 position-sticky bg-white" style="top: 100px;">
+            <div class="card-header bg-primary bg-gradient text-white p-4 border-0 rounded-top-4">
+                <h5 class="fw-bold mb-0 text-white d-flex align-items-center gap-2"><i class="bi bi-receipt"></i> Order
+                    Summary</h5>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex justify-content-between mb-3 text-secondary">
+                    <span class="fw-medium">Subtotal</span>
+                    <span class="fw-bold text-dark">₹{{ total_amount }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3 text-secondary">
+                    <span class="fw-medium">Estimated Tax</span>
+                    <span class="fw-bold text-dark">₹0</span>
+                </div>
+                <div class="d-flex justify-content-between mb-4 text-secondary">
+                    <span class="fw-medium">Shipping</span>
+                    <span
+                        class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 border border-success border-opacity-25 fw-bold">Free</span>
+                </div>
+
+                <hr class="my-4 border-2">
+
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <span class="fw-bolder fs-5 text-dark">Total</span>
+                    <span class="display-6 fw-bold text-gradient">₹{{ total_amount }}</span>
+                </div>
+
+                <a href="/checkout"
+                    class="btn btn-dark btn-lg w-100 rounded-pill fw-bold shadow-lg d-flex justify-content-center align-items-center gap-2 py-3 transition hover-scale">
+                    Secure Checkout <i class="bi bi-lock-fill"></i>
+                </a>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png"
+                        width="40" alt="Visa" class="mx-1 opacity-75 grayscale-hover">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png"
+                        width="40" alt="Mastercard" class="mx-1 opacity-75 grayscale-hover">
+                    <p class="text-muted small mt-3 mb-0 fw-medium"><i class="bi bi-shield-check me-1 text-success"></i>
+                        Payments securely encrypted</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .transition-hover {
+        transition: background-color 0.3s ease;
+    }
+
+    .transition-hover:hover {
+        background-color: #f8fafc !important;
+    }
+
+    .mix-blend-multiply {
+        mix-blend-mode: multiply;
+    }
+
+    .hover-primary:hover {
+        color: var(--bs-primary) !important;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+
+    .grayscale-hover {
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+    }
+
+    .grayscale-hover:hover {
+        filter: grayscale(0%);
+        cursor: pointer;
+    }
+</style>
+{% else %}
+<div class="card border-0 shadow-sm rounded-4 text-center py-5 animate-on-scroll">
+    <div class="card-body py-5 my-5">
+        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+            style="width: 140px; height: 140px;">
+            <i class="bi bi-bag-x text-muted" style="font-size: 4rem;"></i>
+        </div>
+        <h2 class="fw-bolder mb-3 display-6">Your cart is empty</h2>
+        <p class="text-muted mb-4 fs-5 w-50 mx-auto">Looks like you haven't added any premium products to your cart yet.
+            Discover our collection today.</p>
+        <a href="/shop" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg mt-3">Start Shopping
+            Now</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

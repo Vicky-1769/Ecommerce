@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom animate-on-scroll">
+    <div>
+        <h2 class="display-6 fw-bolder mb-1 text-dark">Admin Dashboard</h2>
+        <p class="text-muted mb-0">Management Portal for DevStore content.</p>
+    </div>
+    <button class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm fw-bold d-flex align-items-center gap-2"
+        data-bs-toggle="modal" data-bs-target="#addProductModal">
+        <i class="bi bi-plus-lg"></i> Add New Product
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5 bg-white animate-on-scroll delay-100">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 border-light">
+            <thead class="bg-light">
+                <tr>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider">ID</th>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider">Image</th>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider">Name</th>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider">Category
+                    </th>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider">Price (₹)
+                    </th>
+                    <th scope="col" class="py-3 px-4 text-muted small fw-bold text-uppercase tracking-wider text-end">
+                        Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td class="px-4 fw-medium text-secondary">#{{ product.id }}</td>
+                    <td class="px-4">
+                        <img src="{{ product.image }}" alt="{{ product.name }}"
+                            class="rounded bg-light object-fit-contain p-1" style="width: 50px; height: 50px;">
+                    </td>
+                    <td class="px-4 fw-bold text-dark">{{ product.name }}</td>
+                    <td class="px-4"><span
+                            class="badge bg-secondary bg-opacity-10 text-secondary border rounded-pill">{{
+                            product.category }}</span></td>
+                    <td class="px-4 fw-semibold text-primary">₹{{ product.price }}</td>
+                    <td class="px-4 text-end">
+                        <a href="/admin/delete_product/{{ product.id }}"
+                            class="btn btn-sm btn-outline-danger rounded-circle p-2 shadow-sm border-2"
+                            title="Delete Product" onclick="return confirm('Confirm deletion of {{ product.name }}?');">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-5 text-muted">
+                        <i class="bi bi-box-seam d-block fs-1 mb-3"></i>
+                        <p class="mb-0">No products found in the database.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-light border-0 px-4 py-3">
+                <h5 class="modal-title fw-bold" id="addProductModalLabel">Add New Product</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/admin/add_product" method="POST" id="addProductForm">
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-medium small">Product Name</label>
+                        <input type="text" name="name" class="form-control border-light shadow-sm bg-light" required>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <label class="form-label text-muted fw-medium small">Category</label>
+                            <input type="text" name="category" class="form-control border-light shadow-sm bg-light"
+                                required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label text-muted fw-medium small">Price (₹)</label>
+                            <input type="number" name="price" class="form-control border-light shadow-sm bg-light"
+                                required min="0">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-medium small">Image URL</label>
+                        <input type="url" name="image" class="form-control border-light shadow-sm bg-light"
+                            placeholder="https://..." required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-muted fw-medium small">Description</label>
+                        <textarea name="description" class="form-control border-light shadow-sm bg-light" rows="3"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold shadow">Save
+                        Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

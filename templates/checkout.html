@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-10 col-lg-8">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Secure Checkout</h2>
+            <p class="text-muted">Complete your order swiftly and securely.</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-7">
+                <form action="/checkout" method="POST" id="checkout-form">
+                    <h4 class="fw-semibold mb-4 d-flex align-items-center gap-2"><i
+                            class="bi bi-house-door text-primary"></i> Shipping Address</h4>
+
+                    <div class="card border-0 shadow-sm rounded-4 mb-5 bg-white">
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label text-muted fw-medium small">Full Name</label>
+                                <input type="text" class="form-control bg-light border-0 py-2" id="fullName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label text-muted fw-medium small">Street
+                                    Address</label>
+                                <textarea class="form-control bg-light border-0 py-2" id="address" name="address"
+                                    rows="3" required placeholder="Apartment, Studio, or Floor"></textarea>
+                            </div>
+                            <div class="row g-3 mb-2">
+                                <div class="col-sm-6">
+                                    <label for="city" class="form-label text-muted fw-medium small">City</label>
+                                    <input type="text" class="form-control bg-light border-0 py-2" id="city" required>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="zip" class="form-label text-muted fw-medium small">Zip Code</label>
+                                    <input type="text" class="form-control bg-light border-0 py-2" id="zip" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="fw-semibold mb-4 d-flex align-items-center gap-2"><i
+                            class="bi bi-credit-card text-primary"></i> Payment Method</h4>
+
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white">
+                        <div class="card-body p-4">
+                            <div class="list-group list-group-flush gap-2">
+                                <label
+                                    class="list-group-item d-flex gap-3 bg-light rounded-3 p-3 border-0 cursor-pointer align-items-center">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="payment"
+                                        id="payment-cc" value="Credit Card" checked>
+                                    <span class="pt-1 form-checked-content">
+                                        <strong class="d-block mb-1">Credit / Debit Card</strong>
+                                        <small class="text-muted d-block">Secure payment using your card.</small>
+                                    </span>
+                                </label>
+                                <label
+                                    class="list-group-item d-flex gap-3 bg-light rounded-3 p-3 border-0 cursor-pointer align-items-center">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="payment"
+                                        id="payment-cod" value="Cash on Delivery">
+                                    <span class="pt-1 form-checked-content">
+                                        <strong class="d-block mb-1">Cash on Delivery</strong>
+                                        <small class="text-muted d-block">Pay when you receive the items.</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card border-0 shadow-sm rounded-4 position-sticky bg-white" style="top: 100px;">
+                    <div
+                        class="card-body p-4 bg-primary bg-opacity-10 rounded-top-4 border-bottom border-primary border-opacity-25 text-center">
+                        <p class="text-muted fw-medium mb-1">Amount to Pay</p>
+                        <h2 class="fw-bold text-primary mb-0">₹{{ total_amount }}</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="fw-semibold mb-4">Summary</h5>
+
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Subtotal</span>
+                            <span>₹{{ total_amount }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Standard Shipping</span>
+                            <span class="text-success fw-medium">Free</span>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <div class="d-flex justify-content-between align-items-center fw-bold fs-5 mb-4 text-dark">
+                            <span>Total</span>
+                            <span>₹{{ total_amount }}</span>
+                        </div>
+
+                        <button type="submit" form="checkout-form"
+                            class="btn btn-primary btn-lg w-100 rounded-pill fw-medium shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-lock-fill"></i> Place Order Securely
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .form-check-input:checked+.form-checked-content strong {
+        color: var(--bs-primary);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-5 animate-on-scroll">
+    <div>
+        <h2 class="display-6 fw-bolder mb-1 text-dark">My Wishlist</h2>
+        <p class="text-muted mb-0">Products you've saved for later.</p>
+    </div>
+</div>
+
+{% if products %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5 animate-on-scroll delay-100">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100 product-card border-0 bg-white">
+            <div class="position-relative overflow-hidden p-3 bg-light rounded-top-4" style="height: 240px;">
+                <img src="{{ product.image }}"
+                    class="img-fluid img-hover-zoom w-100 h-100 object-fit-contain drop-shadow"
+                    alt="{{ product.name }}">
+                <span
+                    class="badge bg-white text-dark shadow-sm position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill fw-bold border border-light">
+                    {{ product.category }}
+                </span>
+
+                <div class="position-absolute top-0 end-0 m-3 d-flex flex-column gap-2 overlay-btn transition"
+                    style="opacity: 1; transform: translateY(0);">
+                    <a href="/add_wishlist/{{ product.id }}" class="btn btn-light rounded-circle shadow p-2 text-danger"
+                        title="Remove from Wishlist">
+                        <i class="bi bi-heart-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body d-flex flex-column p-4">
+                <h5 class="card-title fw-bold mb-2 text-dark">{{ product.name }}</h5>
+                <p class="card-text text-muted small flex-grow-1 lh-sm">{{ product.description|truncate(70) }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <span class="fs-4 fw-bolder text-gradient">₹{{ product.price }}</span>
+                    <a href="/add_to_cart/{{ product.id }}"
+                        class="btn btn-primary rounded-circle shadow d-flex align-items-center justify-content-center p-0"
+                        style="width: 44px; height: 44px;" title="Move to Cart">
+                        <i class="bi bi-cart-plus fs-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .drop-shadow {
+        filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.1));
+    }
+
+    .product-card:hover .overlay-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% else %}
+<div class="card border-0 shadow-sm rounded-4 text-center py-5 animate-on-scroll">
+    <div class="card-body py-5 my-5">
+        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+            style="width: 140px; height: 140px;">
+            <i class="bi bi-heart-break text-muted" style="font-size: 4rem;"></i>
+        </div>
+        <h2 class="fw-bolder mb-3 display-6">Your wishlist is lonely</h2>
+        <p class="text-muted mb-4 fs-5 w-50 mx-auto">Start saving your favorite premium items by tapping the heart icon
+            in our active catalog.</p>
+        <a href="/shop" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg mt-3">Discover
+            Products</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5 mb-5 align-items-center min-vh-75">
+    <div class="col-md-8 col-lg-5">
+        <div class="text-center mb-4" style="animation: fadeIn 0.5s ease;">
+            <div class="bg-white p-3 rounded-circle shadow-sm d-inline-block border mb-3">
+                <i class="bi bi-hexagon-fill text-primary" style="font-size: 2.5rem;"></i>
+            </div>
+            <h2 class="fw-bolder fs-1">Welcome Back</h2>
+            <p class="text-muted">Sign in to unlock exclusive tech deals.</p>
+        </div>
+
+        <div class="card shadow rounded-4 border-0 p-1 bg-white" style="animation: fadeInUp 0.5s ease;">
+            <div class="card-body p-4 p-md-5">
+                <form method="POST" action="/login">
+                    <div class="mb-4">
+                        <label for="email"
+                            class="form-label fw-bold text-dark small text-uppercase tracking-wider">Email
+                            address</label>
+                        <div class="input-group input-group-lg shadow-sm rounded-4 overflow-hidden">
+                            <span class="input-group-text bg-light border-0 px-4"><i
+                                    class="bi bi-envelope-fill text-primary opacity-75"></i></span>
+                            <input type="email" class="form-control border-0 bg-light fs-6 py-3" id="email" name="email"
+                                placeholder="name@example.com" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3 rounded-pill fw-bold shadow">
+                        Send Secure OTP <i class="bi bi-arrow-right-short ms-1"></i>
+                    </button>
+                    <p class="text-center text-muted small mt-2">By continuing, you agree to DevStore's <a href="#"
+                            class="text-decoration-none text-primary">Terms of Service</a> & <a href="#"
+                            class="text-decoration-none text-primary">Privacy Policy</a>.</p>
+                </form>
+
+                <div class="d-flex align-items-center my-4 position-relative">
+                    <div class="flex-grow-1 border-top border-gray-200"></div>
+                    <span
+                        class="px-3 text-muted small fw-semibold bg-white position-absolute top-50 start-50 translate-middle">OR
+                        CONTINUE WITH</span>
+                </div>
+
+                <a href="/login/google"
+                    class="btn btn-light btn-lg w-100 rounded-pill fw-bold border shadow-sm d-flex align-items-center justify-content-center gap-3 py-3 transition"
+                    style="background-color: #fff;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            fill="#4285F4" />
+                        <path
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.16v2.84C3.99 20.53 7.7 23 12 23z"
+                            fill="#34A853" />
+                        <path
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.16C1.43 8.55 1 10.22 1 12s.43 3.45 1.16 4.93l3.68-2.84z"
+                            fill="#FBBC05" />
+                        <path
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.16 7.07l3.68 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                            fill="#EA4335" />
+                    </svg>
+                    Google Account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

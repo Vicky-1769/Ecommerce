@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center justify-content-between min-vh-75 mt-2 mb-5 py-5 overflow-hidden">
+    <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0 position-relative z-1"
+        style="animation: fadeInUp 0.8s ease;">
+        <span
+            class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold mb-3 border border-primary border-opacity-25"
+            style="font-size: 0.9rem;">✨ Welcome to the future of tech</span>
+
+        <h1 class="display-3 fw-bolder mb-4 text-gradient" style="line-height: 1.1;">Elevate Your<br>Tech Lifestyle</h1>
+
+        <p class="lead mb-5 pe-lg-5" style="color: var(--gray);">Discover our curated collection of premium electronics
+            tailored for professionals, creators, and enthusiasts. The best gear at your fingertips.</p>
+
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+            <a href="/shop"
+                class="btn btn-primary btn-lg px-5 py-3 fs-5 rounded-pill shadow-lg d-flex align-items-center justify-content-center gap-2">Explore
+                Shop <i class="bi bi-arrow-right-short fs-4"></i></a>
+
+            {% if not session.get('user') %}
+            <a href="/login"
+                class="btn btn-outline-dark btn-lg px-5 py-3 fs-5 rounded-pill d-flex align-items-center justify-content-center gap-2 border-2">Sign
+                In <i class="bi bi-person"></i></a>
+            {% endif %}
+        </div>
+
+        <div class="mt-5 d-flex align-items-center justify-content-center justify-content-lg-start gap-4 text-start">
+            <div>
+                <h3 class="fw-bold text-dark mb-0">5k+</h3>
+                <p class="text-muted small mb-0">Happy Customers</p>
+            </div>
+            <div class="border-start border-2 h-50 mx-2"></div>
+            <div>
+                <h3 class="fw-bold text-dark mb-0">500+</h3>
+                <p class="text-muted small mb-0">Premium Products</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5 position-relative" style="animation: zoomIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        <!-- Decorative blobs behind image -->
+        <div class="position-absolute top-50 start-50 translate-middle bg-primary rounded-circle"
+            style="width: 450px; height: 450px; filter: blur(80px); opacity: 0.3; z-index: -1;"></div>
+        <div class="position-absolute bottom-0 end-0 bg-info rounded-circle"
+            style="width: 300px; height: 300px; filter: blur(70px); opacity: 0.2; z-index: -1;"></div>
+
+        <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=800&auto=format&fit=crop&q=80"
+            alt="Premium Tech Gear" class="img-fluid rounded-4 shadow-lg w-100 object-fit-cover"
+            style="height: 600px; border: 8px solid white;">
+
+        <!-- Floating badge -->
+        <div class="position-absolute bottom-0 start-0 translate-middle mb-5 ms-4 bg-white p-3 rounded-4 shadow-lg d-flex align-items-center gap-3"
+            style="animation: float 4s ease-in-out infinite;">
+            <div class="bg-success bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px;"><i class="bi bi-star-fill text-warning fs-5"></i></div>
+            <div>
+                <h6 class="fw-bold mb-0">Premium Quality</h6>
+                <small class="text-muted">100% Guaranteed</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 pt-5 text-center g-4 animate-on-scroll">
+    <div class="col-12 mb-4">
+        <h2 class="fw-bold">Why Choose DevStore?</h2>
+        <p class="text-muted">We provide the best shopping experience for your tech needs.</p>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-5 h-100 border-0 feature-card text-center"
+            style="background: linear-gradient(to bottom, #ffffff, #f8fafc);">
+            <div class="bg-primary text-white rounded-4 d-inline-flex align-items-center justify-content-center mx-auto mb-4 shadow"
+                style="width: 70px; height: 70px; transform: rotate(-10deg);">
+                <i class="bi bi-rocket-takeoff-fill fs-2" style="transform: rotate(10deg);"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Lightning Fast</h4>
+            <p class="text-muted mb-0">Same-day dispatch and expedited delivery on all premium orders worldwide.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-5 h-100 border-0 feature-card text-center"
+            style="background: linear-gradient(to bottom, #ffffff, #f8fafc);">
+            <div class="bg-secondary text-white rounded-4 d-inline-flex align-items-center justify-content-center mx-auto mb-4 shadow"
+                style="width: 70px; height: 70px; transform: rotate(10deg);">
+                <i class="bi bi-shield-lock-fill fs-2" style="transform: rotate(-10deg);"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Secure Payment</h4>
+            <p class="text-muted mb-0">Bank-level 256-bit encryption ensures your transactions are completely safe.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-5 h-100 border-0 feature-card text-center"
+            style="background: linear-gradient(to bottom, #ffffff, #f8fafc);">
+            <div class="bg-info text-white rounded-4 d-inline-flex align-items-center justify-content-center mx-auto mb-4 shadow"
+                style="width: 70px; height: 70px; transform: rotate(-5deg);">
+                <i class="bi bi-arrow-repeat fs-2" style="transform: rotate(5deg);"></i>
+            </div>
+            <h4 class="fw-bold mb-3">Easy Returns</h4>
+            <p class="text-muted mb-0">Not satisfied? Return any item within 30 days hassle-free with no questions
+                asked.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

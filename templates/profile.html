@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4 mb-5">
+    <div class="col-lg-3 mb-4 mb-lg-0">
+        <!-- Sidebar -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm"
+                    style="width: 80px; height: 80px; font-size: 2rem;">
+                    {{ user_email[0].upper() }}
+                </div>
+                <h5 class="fw-bold text-truncate" title="{{ user_email }}">{{ user_email.split('@')[0] }}</h5>
+                <p class="text-muted small mb-0">{{ user_email }}</p>
+            </div>
+
+            <hr class="text-muted opacity-25 mb-4">
+
+            <div class="nav flex-column nav-pills gap-2" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active rounded-pill fw-medium d-flex align-items-center gap-3 py-3" id="orders-tab"
+                    data-bs-toggle="pill" href="#orders" role="tab" aria-controls="orders" aria-selected="true">
+                    <i class="bi bi-bag-check fs-5"></i> My Orders
+                </a>
+                <a class="nav-link rounded-pill fw-medium d-flex align-items-center gap-3 py-3 text-danger"
+                    href="/logout">
+                    <i class="bi bi-box-arrow-right fs-5"></i> Log Out
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <!-- Main Content -->
+        <h3 class="fw-bold mb-4">Order History</h3>
+
+        <div class="tab-content border-0">
+            <div class="tab-pane fade show active" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                {% if orders %}
+                <div class="row g-4">
+                    {% for order in orders|reverse %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                            <div
+                                class="card-header bg-light border-0 p-4 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                                <div>
+                                    <p class="text-muted small mb-1">Order ID</p>
+                                    <p class="fw-semibold mb-0 text-dark">#{{ order._id }}</p>
+                                </div>
+                                <div class="text-sm-end">
+                                    <p class="text-muted small mb-1">Total Amount</p>
+                                    <p class="fw-bold text-primary mb-0 fs-5">₹{{ order.total_amount }}</p>
+                                </div>
+                            </div>
+                            <div class="card-body p-4 bg-white">
+                                <div class="d-flex align-items-center gap-2 mb-4">
+                                    <span
+                                        class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-medium d-flex align-items-center gap-1">
+                                        <i class="bi bi-check-circle-fill"></i> {{ order.status }}
+                                    </span>
+                                    <span
+                                        class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill fw-medium border-0">{{
+                                        order.payment_method }}</span>
+                                </div>
+
+                                <h6 class="fw-semibold mb-3">Items ({{ order.enriched_items|length }})</h6>
+                                <ul class="list-group list-group-flush rounded-3 border">
+                                    {% for item in order.enriched_items %}
+                                    <li
+                                        class="list-group-item p-3 d-flex justify-content-between align-items-center bg-white border-0 border-bottom">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-light rounded p-2 d-flex align-items-center justify-content-center text-primary"
+                                                style="width: 40px; height: 40px;">
+                                                <i class="bi bi-box-seam"></i>
+                                            </div>
+                                            <div>
+                                                <p class="fw-medium mb-0">{{ item.name }}</p>
+                                                <p class="text-muted small mb-0">Qty: {{ item.quantity }} × ₹{{
+                                                    item.price }}</p>
+                                            </div>
+                                        </div>
+                                        <span class="fw-semibold text-dark">₹{{ item.price * item.quantity }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="card border-0 shadow-sm rounded-4 text-center py-5">
+                    <div class="card-body py-5">
+                        <i class="bi bi-bag-x text-muted mb-3 d-block" style="font-size: 4rem; opacity: 0.5;"></i>
+                        <h4 class="fw-bold mb-3">No orders yet</h4>
+                        <p class="text-muted mb-4">Looks like you haven't placed any orders.</p>
+                        <a href="/shop" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Start Shopping</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

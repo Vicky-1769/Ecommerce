@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/shop" class="text-decoration-none">Shop</a></li>
+        <li class="breadcrumb-item"><a href="/shop?category={{ product.category|urlencode }}"
+                class="text-decoration-none">{{ product.category }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+    <div class="row g-0">
+        <div class="col-md-6 border-end bg-light p-4 d-flex align-items-center justify-content-center">
+            <img src="{{ product.image }}" class="img-fluid rounded-4 shadow-sm" alt="{{ product.name }}"
+                style="max-height: 500px; object-fit: contain;">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body p-5 text-primary">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span
+                        class="badge bg-primary text-white bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">{{
+                        product.category }}</span>
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold"><i
+                            class="bi bi-check-circle me-1"></i> In Stock</span>
+                </div>
+
+                <h1 class="card-title fw-bold mb-3 display-5">{{ product.name }}</h1>
+                <p class="card-text text-muted fs-5 mb-4">{{ product.description }}</p>
+
+                <hr class="my-4 text-muted">
+
+                <div class="d-flex align-items-center mb-5 text-dark">
+                    <span class="fs-1 fw-bold text-primary me-3">₹{{ product.price }}</span>
+                    <span class="text-muted text-decoration-line-through">₹{{ (product.price * 1.2)|int }}</span>
+                    <span class="badge bg-danger ms-3 px-2 py-1">20% OFF</span>
+                </div>
+
+                <div class="d-grid gap-3 d-md-flex text-dark">
+                    <a href="/add_to_cart/{{ product.id }}"
+                        class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-semibold flex-grow-1 shadow-sm d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-cart-plus fs-5"></i>
+                        Add to Cart
+                    </a>
+                    <a href="/add_wishlist/{{ product.id }}"
+                        class="btn btn-outline-danger btn-lg px-4 py-3 rounded-pill fw-semibold shadow-sm d-flex align-items-center justify-content-center"
+                        title="Toggle Wishlist">
+                        {% if is_wishlisted %}
+                        <i class="bi bi-heart-fill"></i>
+                        {% else %}
+                        <i class="bi bi-heart"></i>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="mt-5 text-dark">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-shield-check text-primary me-2"></i>DevStore Guarantee</h5>
+                    <ul class="list-unstyled text-muted mb-0">
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> Free shipping on all orders</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-success me-2"></i> 30-day money-back guarantee</li>
+                        <li><i class="bi bi-check2 text-success me-2"></i> 24/7 technical customer support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
