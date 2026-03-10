@@ -22,7 +22,8 @@ def create_app():
     app.config["MAIL_USE_TLS"] =  os.getenv("MAIL_USE_TLS", "True") == "True"
     app.config["MAIL_USERNAME"] = os.environ.get("EMAIL_USER")
     app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_PASS")
-    app.config["'MAIL_DEFAULT_SENDER"] = os.getenv("EMAIL_USER")
+    app.config["MAIL_DEFAULT_SENDER"] = os.getenv("EMAIL_USER")
+    app.config["MAIL_TIMEOUT"] = 10
     mongo.init_app(app)
     mail.init_app(app)
 
