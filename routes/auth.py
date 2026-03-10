@@ -24,14 +24,17 @@ def login():
         msg = Message("Your OTP Code", sender=current_app.config.get("MAIL_USERNAME"), recipients=[email])
         msg.body = f"Your OTP is {otp}"
         try:
-            def send_async_email(app, msg):
+            from threading import Thread
+from flask import current_app
+
+def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-	Thread(
-    		target=send_async_email,
-    		args=(current_app._get_current_object(), msg)
-	).start()
+Thread(
+    target=send_async_email,
+    args=(current_app._get_current_object(), msg)
+).start()
             flash("OTP sent to your email! Please check.", "info")
         except Exception as e:
             flash(f"Error sending email. Use 123456 as a bypass for testing or fix SMTP.", "danger")
