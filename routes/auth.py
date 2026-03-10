@@ -1,4 +1,4 @@
-```python
+
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from flask_mail import Message
 from flask_dance.contrib.google import google
@@ -56,12 +56,16 @@ DevStore Security
 """
 
         try:
+            # Note: Render Free tier blocks outbound SMTP ports (25, 465, 587).
+            # The background thread prevents the 500 crash, but the email will silently fail.
             Thread(
                 target=send_async_email,
                 args=(current_app._get_current_object(), msg)
             ).start()
 
-            flash("OTP sent to your email!", "info")
+            # For testing/demo purposes, we show the OTP directly because Render Free will block the real email.
+            flash("OTP process started! Note: Render Free tier blocks Gmail SMTP.", "info")
+            flash(f"Since this is deployed on a free Render tier, your OTP is: {otp} (Testing Fallback)", "warning")
 
         except Exception as e:
             print("Email Error:", e)
@@ -141,4 +145,3 @@ def logout():
     flash("Logged out successfully.", "success")
 
     return redirect(url_for("main.shop"))
-```
